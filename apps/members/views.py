@@ -1,4 +1,3 @@
-# apps/members/views.py
 from rest_framework import generics, permissions
 from .models import Member
 from .serializers import MemberSerializer
