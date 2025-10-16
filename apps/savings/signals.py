@@ -1,16 +1,22 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Savings
+from .models import Deposit, Withdrawal
+from apps.members.models import Member
 
-@receiver(post_save, sender=Savings)
-def update_member_balance(sender, instance, created, **kwargs):
-    """
-    Automatically update member's balance when a new saving record is created.
-    """
+
+@receiver(post_save, sender=Deposit)
+def update_balance_after_deposit(sender, instance, created, **kwargs):
+    """Update member's savings balance after a deposit is made"""
     if created:
         member = instance.member
-        # Calculate total balance from all deposits
-        total_savings = sum(s.amount for s in member.savings.all())
-        member.savings_balance = total_savings
+        member.savings_balance += instance.amount
         member.save()
-        print(f"Updated savings balance for {member.user.username}: {total_savings}")
+
+
+@receiver(post_save, sender=Withdrawal)
+def update_balance_after_withdrawal(sender, instance, created, **kwargs):
+    """Update member's savings balance after a withdrawal is made"""
+    if created:
+        member = instance.member
+        member.savings_balance -= instance.amount
+        member.save()

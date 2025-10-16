@@ -1,16 +1,26 @@
 from django.db import models
-from django.conf import settings
 from apps.members.models import Member
 
-class Savings(models.Model):
+
+class Deposit(models.Model):
     """
-    Represents a member's savings deposit record.
-    Each deposit updates the member's overall savings balance.
+    Represents a deposit transaction made by a member.
     """
-    member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="savings")
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="deposits")
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateTimeField(auto_now_add=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.member.user.username} - Deposit: {self.amount}"
+        return f"Deposit of {self.amount} by {self.member.user.username}"
+
+
+class Withdrawal(models.Model):
+    """
+    Represents a withdrawal transaction made by a member.
+    """
+    member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="withdrawals")
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Withdrawal of {self.amount} by {self.member.user.username}"
