@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.members',
     'apps.core',
     'apps.savings',
+    'apps.loans',
 ]
 
 MIDDLEWARE = [
