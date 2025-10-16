@@ -1,10 +1,30 @@
 from rest_framework import serializers
-from .models import Savings
+from .models import Deposit, Withdrawal
 
-class SavingsSerializer(serializers.ModelSerializer):
-    member_name = serializers.CharField(source='member.user.username', read_only=True)
+
+class DepositSerializer(serializers.ModelSerializer):
+    """
+    Serializer for deposits:
+    - Member is automatically linked (read-only).
+    - Shows deposit amount and date.
+    """
+    member = serializers.StringRelatedField(read_only=True)
 
     class Meta:
-        model = Savings
-        fields = ['id', 'member', 'member_name', 'amount', 'description', 'date']
-        read_only_fields = ['date', 'member_name']
+        model = Deposit
+        fields = ['id', 'member', 'amount', 'date']
+        read_only_fields = ['id', 'member', 'date']
+
+
+class WithdrawalSerializer(serializers.ModelSerializer):
+    """
+    Serializer for withdrawals:
+    - Member is automatically linked (read-only).
+    - Shows withdrawal amount and date.
+    """
+    member = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Withdrawal
+        fields = ['id', 'member', 'amount', 'date']
+        read_only_fields = ['id', 'member', 'date']
