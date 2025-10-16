@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import DepositViewSet, WithdrawalViewSet
+from .views import DepositViewSet, WithdrawalViewSet, BalanceView
 
 urlpatterns = [
     # Deposit endpoints
@@ -13,4 +13,6 @@ urlpatterns = [
         'get': 'list',        # View withdrawals
         'post': 'create'      # Make withdrawal
     }), name='withdrawal-list-create'),
+
+    path('balance/', BalanceView.as_view(), name='member-balance'),
 ]

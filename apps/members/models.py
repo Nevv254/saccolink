@@ -15,5 +15,8 @@ class Member(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     joined_on = models.DateTimeField(auto_now_add=True)
 
+    savings_balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    loan_balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+
     def __str__(self):
         return f"Member Profile: {self.user.username}"
