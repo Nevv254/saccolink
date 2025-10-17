@@ -1,5 +1,6 @@
 from django.db import models
 from apps.members.models import Member
+from django.conf import settings
 
 
 class Deposit(models.Model):
@@ -12,6 +13,16 @@ class Deposit(models.Model):
 
     def __str__(self):
         return f"Deposit of {self.amount} by {self.member.user.username}"
+    
+    # approval 
+    approved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="approved_deposits"
+    )
+    approved_on = models.DateTimeField(null=True, blank=True)
 
 
 class Withdrawal(models.Model):

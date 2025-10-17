@@ -25,6 +25,15 @@ class Loan(models.Model):
     def __str__(self):
         return f"Loan #{self.id} - {self.member.user.username} - {self.status}"
     
+    approved_by = models.ForeignKey(
+     settings.AUTH_USER_MODEL,
+     null=True,
+     blank=True,
+     on_delete=models.SET_NULL,
+     related_name="approved_loans"
+    )
+approved_on = models.DateTimeField(null=True, blank=True)
+    
 
 class LoanRepayment(models.Model):
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, related_name='repayments')
