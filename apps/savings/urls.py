@@ -1,18 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import DepositViewSet, WithdrawalViewSet, BalanceView
 
+# Use DRF's router to automatically generate routes
+router = DefaultRouter()
+router.register(r'deposits', DepositViewSet, basename='deposit')
+router.register(r'withdrawals', WithdrawalViewSet, basename='withdrawal')
+
 urlpatterns = [
-    # Deposit endpoints
-    path('deposits/', DepositViewSet.as_view({
-        'get': 'list',        # View deposits
-        'post': 'create'      # Make deposit
-    }), name='deposit-list-create'),
-
-    # Withdrawal endpoints
-    path('withdrawals/', WithdrawalViewSet.as_view({
-        'get': 'list',        # View withdrawals
-        'post': 'create'      # Make withdrawal
-    }), name='withdrawal-list-create'),
-
+    path('', include(router.urls)),
     path('balance/', BalanceView.as_view(), name='member-balance'),
 ]

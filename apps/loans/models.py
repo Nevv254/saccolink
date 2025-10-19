@@ -22,6 +22,8 @@ class Loan(models.Model):
     due_date = models.DateField(null=True, blank=True)
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
+
+
     def __str__(self):
         return f"Loan #{self.id} - {self.member.user.username} - {self.status}"
     
