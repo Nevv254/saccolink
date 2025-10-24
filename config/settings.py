@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'apps.loans',
     'apps.analytics',
     'apps.staff',
-    'apps.admin_dashboard',
 ]
 
 MIDDLEWARE = [
